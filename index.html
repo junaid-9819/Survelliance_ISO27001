@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO 27001 Surveillance Audit Checklist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --primary-dark: #1e3a8a;
+            --accent-color: #3b82f6;
+            --background: #fafafa;
+            --surface: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --border-light: #e5e7eb;
+            --border-medium: #d1d5db;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --gradient-primary: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            --shadow-soft: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background);
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-large);
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .intro-section {
+            padding: 2.5rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .intro-text {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background: var(--surface);
+        }
+
+        .checklist-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.95rem;
+        }
+
+        .table-header {
+            background: var(--gradient-primary);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .table-header th {
+            padding: 1.25rem 1.5rem;
+            font-weight: 600;
+            text-align: left;
+            font-size: 1rem;
+            letter-spacing: 0.025em;
+        }
+
+        .table-header th:first-child {
+            border-radius: 0;
+        }
+
+        .table-header th:last-child {
+            border-radius: 0;
+        }
+
+        .table-row {
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.2s ease;
+        }
+
+        .table-row:hover {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.1);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-cell {
+            padding: 1.5rem;
+            vertical-align: top;
+            position: relative;
+        }
+
+        .task-cell {
+            font-weight: 600;
+            color: var(--primary-dark);
+            min-width: 250px;
+        }
+
+        .actions-cell {
+            color: var(--text-primary);
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        .timeline-cell {
+            font-weight: 500;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            min-width: 200px;
+        }
+
+        .timeline-badge {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            background: var(--accent-color);
+            color: white;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .progress-indicator {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--accent-color);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .table-row:hover .progress-indicator {
+            opacity: 1;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            padding: 2rem;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem 0.5rem;
+            }
+
+            .intro-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .intro-text {
+                font-size: 1rem;
+            }
+
+            .table-cell {
+                padding: 1rem;
+            }
+
+            .checklist-table {
+                font-size: 0.875rem;
+            }
+
+            .table-header th {
+                padding: 1rem;
+                font-size: 0.875rem;
+            }
+
+            .task-cell {
+                min-width: 200px;
+            }
+
+            .actions-cell {
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .main-title {
+                font-size: 1.75rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .intro-text {
+                font-size: 0.95rem;
+            }
+
+            .table-cell {
+                padding: 0.75rem;
+            }
+
+            .timeline-cell {
+                white-space: normal;
+                min-width: unset;
+            }
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            .table-row {
+                transition: none;
+            }
+
+            .table-row:hover {
+                transform: none;
+            }
+
+            .progress-indicator {
+                transition: none;
+            }
+        }
+
+        /* Focus styles for keyboard navigation */
+        .table-row:focus-within {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+
+            .table-row:hover {
+                background: transparent;
+                transform: none;
+                box-shadow: none;
+            }
+
+            .progress-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="main-title">ISO 27001 Surveillance Audit Preparation Checklist</h1>
+            <p class="subtitle">Your comprehensive guide to audit readiness and ISMS compliance</p>
+        </header>
+
+        <main class="card">
+            <section class="intro-section">
+                <p class="intro-text">
+                    This roadmap ensures your Information Security Management System (ISMS) remains compliant and robust for surveillance audits. The structured checklist covers key tasks to verify scope, policies, risks, and controls, helping your team stay organized and confident. Each task addresses mandatory requirements like security awareness and team competence, demonstrating continuous improvement and audit readiness.
+                </p>
+            </section>
+
+            <div class="table-container">
+                <table class="checklist-table" role="table" aria-label="ISO 27001 Surveillance Audit Checklist">
+                    <thead class="table-header">
+                        <tr role="row">
+                            <th scope="col" role="columnheader">Task</th>
+                            <th scope="col" role="columnheader">Actions</th>
+                            <th scope="col" role="columnheader">Timeline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-row" role="row" tabindex="0">
+                            <div class="progress-indicator"></div>
+                            <td class="table-cell task-cell" role="cell">Verify and Update ISMS Scope</td>
+                            <td class="table-cell actions-cell" role="cell">Review scope for changes in organization, locations, or assets; update scope document; obtain management approval; communicate changes.</td>
+                            <td class="table-cell timeline-cell" role="cell"><span class="timeline-badge">4–6 months before audit</span></td>
+                        </tr>
+                        <tr class="table-row" role="row" tabindex="0">
+                            <div class="progress-indicator"></div>
+                            <td class="table-cell task-cell" role="cell">Review and Update Policies/Procedures</td>
+                            <td class="table-cell actions-cell" role="cell">Identify expired or outdated policies/procedures; update documents (e.g., Information Security Policy, Incident Response); maintain version control; obtain authorization; communicate updates.</td>
+                            <td class="table-cell timeline-cell" role="cell"><span class="timeline-badge">4–6 months before audit</span></td>
+                        </tr>
+                        <tr class="table-row" role="row" tabindex="0">
+                            <div class="progress-indicator"></div>
+                            <td class="table-cell task-cell" role="cell">Update Key ISMS Records</td>
+                            <td class="table-cell actions-cell" role="cell">Validate KPI matrix (e.g., incident metrics, training completion); update risk register, objectives register, communication register, and supplier register.</td>
+                            <td class="table-cell timeline-cell" role="cell"><span class="timeline-badge">4–6 months before audit</span></td>
+                        </tr>
+                        <tr class="table-row" role="row" tabindex="0">
+                            <div class="progress-indicator"></div>
+                            <td class="table-cell task-cell" role="cell">Verify Risk Assessment Activities</td>
+                            <td class="table-cell actions-cell" role="cell">Conduct risk assessment review for new assets/threats; update risk treatment plans and Statement of Applicability; document evidence (e.g., reports, meeting minutes); test risk response plans.</td>
+                            <td class="table-cell timeline-cell" role="cell"><span class="timeline-badge">3–4 months before audit</span></td>
+                        </tr>
+                        <tr class="table-row" role="row" tabindex="0">
+                            <div class="progress-indicator"></div>
+                            <td class="table-cell task-cell" role="cell">Review and Validate Annex A Controls</td>
+                            <td class="table-cell actions-cell" role="cell">Review all 93 Annex A controls (e.g., A.6.2.1 – Competence, A.6.3 – Awareness); verify implementation and records (e.g., training logs, competency records); address gaps; document findings.</td>
+                            <td class="table-cell timeline-cell" role="cell"><span class="timeline-badge">3–4 months before audit</span></td>
+                        </tr>
+                        <tr class="table-row" role="row" tabindex="0">
+                            <div class="progress-indicator"></div>
+                            <td class="table-cell task-cell" role="cell">Conduct Internal Audit</td>
+                            <td class="table-cell actions-cell" role="cell">Develop audit plan, prioritizing high-risk areas; perform audit with independent auditors; document findings (nonconformities, improvements); update CAPA register.</td>
+                            <td class="table-cell timeline-cell" role="cell"><span class="timeline-badge">2–3 months before audit</span></td>
+                        </tr>
+                        <tr class="table-row" role="row" tabindex="0">
+                            <div class="progress-indicator"></div>
+                            <td class="table-cell task-cell" role="cell">Conduct Management Review Meeting</td>
+                            <td class="table-cell actions-cell" role="cell">Schedule MRM with top management; present scope, policies, risks, controls, and audit findings; document minutes, decisions, and action items.</td>
+                            <td class="table-cell timeline-cell" role="cell"><span class="timeline-badge">1–2 months before audit</span></td>
+                        </tr>
+                        <tr class="table-row" role="row" tabindex="0">
+                            <div class="progress-indicator"></div>
+                            <td class="table-cell task-cell" role="cell">Final Preparations</td>
+                            <td class="table-cell actions-cell" role="cell">Review audit plan from certification body; close CAPA items; conduct employee training (e.g., phishing awareness); perform pre-audit dry run; verify third-party compliance; arrange audit logistics; monitor ISO 27001/27002 updates.</td>
+                            <td class="table-cell timeline-cell" role="cell"><span class="timeline-badge">1–2 months before audit</span></td>
+                        </tr>
+                        <tr class="table-row" role="row" tabindex="0">
+                            <div class="progress-indicator"></div>
+                            <td class="table-cell task-cell" role="cell">Ongoing Tasks</td>
+                            <td class="table-cell actions-cell" role="cell">Monitor ISO 27001/27002 updates or regulatory changes; maintain centralized evidence repository; document continuous improvements (e.g., new tools).</td>
+                            <td class="table-cell timeline-cell" role="cell"><span class="timeline-badge">Ongoing</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="footer-text">
+                Use this checklist systematically to ensure audit readiness and maintain continuous ISMS improvement. 
+                Regular reviews and proactive preparation are key to successful surveillance audits.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
